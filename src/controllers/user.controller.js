@@ -156,10 +156,11 @@ const logoutUser = asyncHandler(async(req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
     {
-      $set: {
-        refreshToken: undefined
+      $unset: {
+        refreshToken: 1
       }
-    },{
+    },
+    {
       new: true
     }
   )
@@ -396,7 +397,7 @@ const getUserChannelProfile = asyncHandler(async(req, res) => {
   return res
   .status(200)
   .json(
-    new ApiResponse(200, channel[0], "User")
+    new ApiResponse(200, channel[0], "User channel fetched successfully")
   )
 })
 
